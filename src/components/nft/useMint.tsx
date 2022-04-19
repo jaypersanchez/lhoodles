@@ -19,10 +19,13 @@ export const useMintForPublic = () => {
 
         const data = hoodles.methods.publicSaleMint(1).encodeABI();
         const gasPrice = await web3.eth.getGasPrice();
+        const glimit = await web3.eth.getBlock("latest");
+        const limit = glimit.gasLimit;
         const tx = {
             from: walletAddress,
             to: hoodles_address,
             gasPrice: gasPrice,
+            gasLimit: limit,
             data: data,
             value: "70000000000000000"
         };
