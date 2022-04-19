@@ -46,6 +46,10 @@ export const useWalletButton = () => {
 
         setWalletAddress(accounts[0]);
         localStorage.setItem("1", "walletConnect");
+
+        window.ethereum.on('accountsChanged', async () => {
+            console.log(1)
+        });
         
       
         // Subscribe to chainId change
