@@ -12,26 +12,7 @@ export const useWalletButton = () => {
         console.log(1)
     }
 
-    useEffect(() => {
-        if(provider != null){
-            provider.on("accountsChanged", (accounts:any) => {
-                switchNework();
-            });
-        
-            // Subscribe to chainId change
-            provider.on("chainChanged", (chainId:any) => {
-                switchNework();
-            });
-        
-            // Subscribe to networkId change
-            provider.on("networkChanged", (networkId:any) => {
-                switchNework();
-            });
-        }
-      },[]);
-
-
-    
+       
 
     const walletButton = useCallback(async () => {
 
@@ -52,6 +33,8 @@ export const useWalletButton = () => {
 
         const provider = await web3Modal.connect();
 
+
+
         // Subscribe to accounts change
         
         const web3 = new Web3(provider);
@@ -63,6 +46,17 @@ export const useWalletButton = () => {
 
         setWalletAddress(accounts[0]);
         localStorage.setItem("1", "walletConnect");
+        
+      
+        // Subscribe to chainId change
+        provider.on("chainChanged", (chainId:any) => {
+            switchNework();
+        });
+      
+        // Subscribe to networkId change
+        provider.on("networkChanged", (networkId:any) => {
+            switchNework();
+        });
 
         // if (provider == null) {
         //     const provider = await web3Modal.connect();
@@ -92,7 +86,7 @@ export const useWalletButton = () => {
         //     setWalletAddress(null);
         //     localStorage.setItem("1", "");
         // }
-  }, []);
+  }, [provider]);
   return walletButton;
 };
 

@@ -18,6 +18,17 @@ const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
 
   const { provider, setProvider, walletAddress, setWalletAddress } = useContext(WalletContext);
   let [amount, setAmount] = useState(1);
+
+  const switchNework = () => {
+      console.log(1)
+  }
+        
+  console.log(1)
+
+  window.ethereum.on('accountsChanged', async () => {
+      console.log(1)
+  });
+ 
   
   const walletButton = useWalletButton();
   const mintNFT = useMintForPublic(amount);
