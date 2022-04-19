@@ -74,7 +74,7 @@ const Countdown = () => {
 
   return (
     <div className="countdown-container">
-      <span className="countdown-title">Ready for the Metastreets?</span>
+      <span className="countdown-title" style={{textAlign: "center"}}>Ready for the Metastreets?</span>
       {/* <span>To be announced!</span> */}
       {/* <span className="countdown-title">Mint Yours.</span> */}
       <div

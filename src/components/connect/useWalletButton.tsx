@@ -7,9 +7,34 @@ import { WalletContext } from "./walletContext";
 export const useWalletButton = () => {
 
     const { provider, setProvider, walletAddress, setWalletAddress } = useContext(WalletContext);
-   
-    const walletButton = useCallback(async () => {
+
+    const switchNework = () => {
+        console.log(1)
+    }
+
+    useEffect(() => {
+        if(provider != null){
+            provider.on("accountsChanged", (accounts:any) => {
+                switchNework();
+            });
         
+            // Subscribe to chainId change
+            provider.on("chainChanged", (chainId:any) => {
+                switchNework();
+            });
+        
+            // Subscribe to networkId change
+            provider.on("networkChanged", (networkId:any) => {
+                switchNework();
+            });
+        }
+      },[]);
+
+
+    
+
+    const walletButton = useCallback(async () => {
+
         const providerOptions = {
             walletconnect: {
                 package: WalletConnectProvider, // required
@@ -26,6 +51,9 @@ export const useWalletButton = () => {
 
 
         const provider = await web3Modal.connect();
+
+        // Subscribe to accounts change
+        
         const web3 = new Web3(provider);
 
         setProvider(web3);

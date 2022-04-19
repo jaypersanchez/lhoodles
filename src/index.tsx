@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { DAppProvider, ChainId } from "@usedapp/core";
 
+
 ReactDOM.render(
   <React.StrictMode>
     {/* <DAppProvider
