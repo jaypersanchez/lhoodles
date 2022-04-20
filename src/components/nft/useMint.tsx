@@ -19,8 +19,14 @@ export const useMintForPublic = (amount:any) => {
         const data = hoodles.methods.publicSaleMint(amount).encodeABI();
         const gasPrice = await web3.eth.getGasPrice();
         const glimit = await web3.eth.getBlock("latest");
-        const priceData = amount * 0.07;
+
+        // const hoodles_price = await hoodles.methods.tokenPrice().call()
+        // const priceData = amount * hoodles_price;
+        // const price = priceData.toString()
+
+        const priceData = amount * 0.00007;
         const price = web3.utils.toWei(priceData.toString(), "ether");
+
         const limit = glimit.gasLimit;
         const tx = {
             from: walletAddress,
@@ -35,7 +41,7 @@ export const useMintForPublic = (amount:any) => {
             const result = await web3.eth.sendTransaction(tx);
             console.log(result)
         } catch {
-
+            console.log("Failed transaction")
         }
        
 

@@ -3,16 +3,22 @@ import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { WalletContext } from "./walletContext";
+import { CHAIN_ID } from "../config/constant";
+import { disconnect } from "process";
 
 export const useWalletButton = () => {
 
     const { provider, setProvider, walletAddress, setWalletAddress } = useContext(WalletContext);
-
-    const switchNework = () => {
-        console.log(1)
+      
+    const changeNetwork = async (chainID:any) => {
+        var result = await window.ethereum.request({
+           method: 'wallet_switchEthereumChain',
+           params: [{ chainId: "0x" + parseInt(chainID).toString(16) }],
+        });
+        return result
     }
 
-       
+    
 
     const walletButton = useCallback(async () => {
 
@@ -30,66 +36,44 @@ export const useWalletButton = () => {
             providerOptions, // required
         });
 
-
         const provider = await web3Modal.connect();
-
-
-
-        // Subscribe to accounts change
-        
         const web3 = new Web3(provider);
+        const chainId = await web3.eth.getChainId();
+
+        if(chainId !== CHAIN_ID) {
+            await changeNetwork(CHAIN_ID)
+        }
 
         setProvider(web3);
-
-        const chainId = await web3.eth.getChainId();
         const accounts = await web3.eth.getAccounts();
-
         setWalletAddress(accounts[0]);
         localStorage.setItem("1", "walletConnect");
 
-        window.ethereum.on('accountsChanged', async () => {
-            console.log(1)
+        // Subscribe to accounts change
+        window.ethereum.on("accountsChanged", (accounts:any) => {
+            console.log("Account Changed")
         });
         
-      
         // Subscribe to chainId change
-        provider.on("chainChanged", (chainId:any) => {
-            switchNework();
-        });
-      
-        // Subscribe to networkId change
-        provider.on("networkChanged", (networkId:any) => {
-            switchNework();
+        window.ethereum.on("chainChanged", (chainId:any) => {
+            console.log("Network Changed")
+            if(chainId != "0x" + CHAIN_ID.toString(16)) {
+                disconnect()
+            }
         });
 
-        // if (provider == null) {
-        //     const provider = await web3Modal.connect();
-
-        //     const web3 = new Web3(provider);
-        //     setProvider(web3);
-
-        //     const chainId = await web3.eth.getChainId();
-        //     const accounts = await web3.eth.getAccounts();
-
-        //     console.log("chainID:", chainId);
-        //     console.log("accounts:", accounts);
-        //     setWalletAddress(accounts[0]);
-        //     localStorage.setItem("1", "walletConnect");
-        // } else if (localStorage.getItem("1") == "walletConnect") {
-        //     const provider = await web3Modal.connect();
-
-        //     const web3 = new Web3(provider);
-        //     setProvider(web3);
-
-        //     const chainId = await web3.eth.getChainId();
-        //     const accounts = await web3.eth.getAccounts();
-        //     setWalletAddress(accounts[0]);
-        // } else {
-        //     await web3Modal.clearCachedProvider();
-        //     setProvider(null);
-        //     setWalletAddress(null);
-        //     localStorage.setItem("1", "");
-        // }
+        const disconnect = async () => {
+            if(provider) {
+                try{
+                   await provider.close();
+                } catch(e) {
+                   setProvider(null)
+                }
+                setProvider(null)
+                await web3Modal.clearCachedProvider();
+            }
+        }
+     
   }, [provider]);
   return walletButton;
 };
