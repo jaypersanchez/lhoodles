@@ -3,6 +3,9 @@ import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { WalletContext } from "./walletContext";
+import { AbiItem } from 'web3-utils'
+import hoodles_abi from "../config/hoodles.json";
+import { hoodles_address } from "../config/constant"
 import { CHAIN_ID } from "../config/constant";
 import { disconnect } from "process";
 
@@ -17,8 +20,6 @@ export const useWalletButton = () => {
         });
         return result
     }
-
-    
 
     const walletButton = useCallback(async () => {
 
@@ -47,11 +48,14 @@ export const useWalletButton = () => {
         setProvider(web3);
         const accounts = await web3.eth.getAccounts();
         setWalletAddress(accounts[0]);
+
+        console.log(accounts)
+
         localStorage.setItem("1", "walletConnect");
 
         // Subscribe to accounts change
-        window.ethereum.on("accountsChanged", (accounts:any) => {
-            console.log("Account Changed")
+        window.ethereum.on("accountsChanged", (accounts1:any) => {
+            setWalletAddress(accounts1[0]);
         });
         
         // Subscribe to chainId change
@@ -74,7 +78,7 @@ export const useWalletButton = () => {
             }
         }
      
-  }, [provider]);
+  }, [provider, walletAddress]);
   return walletButton;
 };
 

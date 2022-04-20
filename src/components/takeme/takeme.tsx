@@ -7,9 +7,11 @@ import { useMintForPublic } from "../nft/useMint";
 
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {Modal, Button} from "react-bootstrap";
-import '../bootstrap.min.css';
+import {Modal, Button, Toast, Row, Col} from "react-bootstrap";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import '../bootstrap.min.css';
 import thanks_img from "../../assets/pictures/thank.jpg"
 
 
@@ -28,6 +30,18 @@ const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
 
   const [show, setShow] = useState(false);
   const [processing, setProcessing] = useState(false)
+  const [toastshow, setToast] = useState(false)
+
+  const notify = () => toast.error("Wow so easy!", {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored'
+  })
 
   const closeModal = () => {
     setShow(false); 
@@ -38,7 +52,7 @@ const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
   }
   
   const walletButton = useWalletButton();
-  const mintNFT = useMintForPublic(amount, setShow, setProcessing);
+  const mintNFT = useMintForPublic(amount, setShow, setProcessing, setToast);
 
   const incrementCount = () => {
     if(amount < 6) {
@@ -67,6 +81,8 @@ const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
   } else if(provider != null && !processing){
     return (
       <div>
+
+        {/* Thanks Modal */}
         <Modal
           size="lg"
           show={show}

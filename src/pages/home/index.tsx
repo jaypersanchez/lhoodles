@@ -1,5 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useState, FC } from "react";
+import { ToastContainer } from 'react-toastify';
 import Welcome from "../../components/welcome/welcome";
 import Faq from "../faq";
 import Roadmap from "../roadmap";
@@ -15,6 +16,7 @@ interface HomePageProps {
 }
 
 const HomePage: FC<HomePageProps> = ({ disc, pointsTo }) => {
+
   const [open, setOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
   const modalContent = [
@@ -156,6 +158,9 @@ const HomePage: FC<HomePageProps> = ({ disc, pointsTo }) => {
           open={open}
           setOpen={setOpen}
         />
+        <div>
+          <ToastContainer />
+        </div>
       </section>
     </AnimatePresence>
   );

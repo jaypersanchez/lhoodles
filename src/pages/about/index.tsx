@@ -9,13 +9,13 @@ interface AboutProps {
 }
 
 const About: FC<AboutProps> = ({ pointsTo }) => {
+
   return (
     <section className="about-container">
       <img src="/highresbounce.gif" className="about-visual" />
       <div className="about-mint-container">
         <div style={{ display: "flex", flexDirection: "column" }}>
           <TakeMeTo title={"Connect Wallet"} to={`/mint-now`} />
-          
         </div>
         <Countdown />
       </div>

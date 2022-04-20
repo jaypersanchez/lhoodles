@@ -1,7 +1,5 @@
 import React, { FC, useState } from "react";
 import AnimatePresence, { motion } from "framer-motion";
-import exit from "../../assets/icons/close.svg";
-import caret from "../../assets/icons/caret-white.svg";
 
 interface ModalProps {
   open: boolean;
