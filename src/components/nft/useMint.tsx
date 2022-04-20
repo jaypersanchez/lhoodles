@@ -8,11 +8,13 @@ import { Button, Modal, ModalBody} from 'reactstrap';
 
 
 
-export const useMintForPublic = (amount:any) => {
+export const useMintForPublic = (amount:any, setShow:any, setProcessing:any) => {
 
     const { provider, walletAddress } = useContext(WalletContext);
 
     const mintNFT = useCallback(async () => {
+
+        setProcessing(true)
 
         const web3 = new Web3(provider)
         const hoodles =  new web3.eth.Contract(hoodles_abi as AbiItem[], hoodles_address)
@@ -38,14 +40,17 @@ export const useMintForPublic = (amount:any) => {
             value: price
         };
         try {
-            console.log(tx);
+            console.log(tx)
             const result = await web3.eth.sendTransaction(tx);
             if(result.status) {
-                
+                setShow(true)
+                setProcessing(false)
             } else {
-
+                setShow(false)
+                setProcessing(false)
             }
         } catch {
+            setProcessing(false)
             console.log("Failed transaction")
         }
        

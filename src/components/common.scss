@@ -53,6 +53,24 @@
   cursor: pointer;
 }
 
+
+.btn-primary {
+    color: #fff;
+    background-color: #b6c1f6 !important;
+    border-color: #d0d3dd !important;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #96a2d9 !important;
+  border-color: #d0d3dd !important;
+}
+
+
+.thanks_img {
+  width: 100%;
+}
+
 .take-me-to-mint-btn {
   border: 3px solid white;
   background-color: vvv.$pastelPink;
