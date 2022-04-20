@@ -65,7 +65,7 @@ export const useMintForPublic = (amount:any, setShow:any, setProcessing:any, set
         const web3 = new Web3(provider)
         const hoodles =  new web3.eth.Contract(hoodles_abi as AbiItem[], hoodles_address)
         const hoodles_price = await hoodles.methods.tokenPrice().call()
-        const priceData = amount * hoodles_price;
+        let priceData = amount * hoodles_price;
         
         const current_amount = await hoodles.methods.publicSaleClaimed(walletAddress).call()
         const max_amount = await hoodles.methods.PUBLIC_SALE_PURCHASE_LIMIT().call()
@@ -78,9 +78,13 @@ export const useMintForPublic = (amount:any, setShow:any, setProcessing:any, set
         }
 
         if(parseInt(current_amount) + parseInt(amount) >= parseInt(max_amount)) {
-            notify()
-            setProcessing(false)
-            return;
+            if(parseInt(current_amount) >= parseInt(max_amount)) {
+                notify()
+                setProcessing(false)
+                return;
+            } else {
+                priceData = (max_amount - current_amount) * hoodles_price
+            }
         }
 
         setProcessing(true)
