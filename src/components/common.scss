@@ -1,5 +1,10 @@
 @use "../styles/variables.scss" as vvv;
 
+*, ::after, ::before {
+  box-sizing: revert !important;
+}
+
+
 .bullet {
   position: relative;
   height: 25px;
@@ -19,6 +24,7 @@
   width: 3em;
   background: #f6a7c1;
   border: 2px solid white;
+  font-size: initial;
 }
 
 .btn_amount:hover {
@@ -35,10 +41,12 @@
   padding: 1em 2em 0 2em;
   justify-content: center;
   font-size: 1.5em;
+  align-items: center;
 }
 
 .amount {
   margin: 0 2em;
+  font-weight: bold;
 }
 
 .pointer {
@@ -181,3 +189,4 @@
       0 0 15px vvv.$pastelPink;
   }
 }
+

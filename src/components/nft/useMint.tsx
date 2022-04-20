@@ -4,6 +4,7 @@ import { AbiItem } from 'web3-utils'
 import { WalletContext } from "../connect/walletContext";
 import hoodles_abi from "../config/hoodles.json";
 import { hoodles_address } from "../config/constant"
+import { Button, Modal, ModalBody} from 'reactstrap';
 
 
 
@@ -39,7 +40,11 @@ export const useMintForPublic = (amount:any) => {
         try {
             console.log(tx);
             const result = await web3.eth.sendTransaction(tx);
-            console.log(result)
+            if(result.status) {
+                
+            } else {
+
+            }
         } catch {
             console.log("Failed transaction")
         }

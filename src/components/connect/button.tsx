@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useEthers, useEtherBalance, useSendTransaction } from "@usedapp/core";
-const { sendTransaction } = useSendTransaction()
 import Identicon from "./icon";
 import "../common.scss";
+
 const ConnectButton = () => {
   const [connecting, setConnecting] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>();

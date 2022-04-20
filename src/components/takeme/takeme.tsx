@@ -7,12 +7,17 @@ import { useMintForPublic } from "../nft/useMint";
 
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {Modal} from "react-bootstrap";
+import '../bootstrap.min.css';
+
 
 interface TakeMeToProps {
   title: string;
   to: string;
   variant?: boolean;
 }
+
+
 const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
   const navigate = useNavigate();
 
@@ -33,6 +38,15 @@ const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
       setAmount(amount);
     }
   }
+  const [show, setShow] = useState(false);
+
+  const closeModal = () => {
+    setShow(false); 
+  }
+
+  const showModal = () => {
+    setShow(true); 
+  }
 
   if(provider == null) {
     return (
@@ -46,6 +60,27 @@ const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
   } else {
     return (
       <div>
+
+        <Modal
+          show={show}
+          onHide={closeModal}
+          aria-labelledby="ModalHeader"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id='ModalHeader'>A Title Goes here</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Some Content here</p>
+          </Modal.Body>
+          <Modal.Footer>
+
+            <button className='btn btn-primary' onClick={closeModal}>
+              Save
+            </button>
+          </Modal.Footer>
+        </Modal>
+
+
         <div className="flex div_amount">
           <button className="btn_amount pointer" onClick={decrementCount}><FontAwesomeIcon icon={faMinus} /></button>
           <div className="amount">{amount}</div>
