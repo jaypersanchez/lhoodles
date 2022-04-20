@@ -21,12 +21,12 @@ export const useMintForPublic = (amount:any) => {
         const gasPrice = await web3.eth.getGasPrice();
         const glimit = await web3.eth.getBlock("latest");
 
-        // const hoodles_price = await hoodles.methods.tokenPrice().call()
-        // const priceData = amount * hoodles_price;
-        // const price = priceData.toString()
+        const hoodles_price = await hoodles.methods.tokenPrice().call()
+        const priceData = amount * hoodles_price;
+        const price = priceData.toString()
 
-        const priceData = amount * 0.00007;
-        const price = web3.utils.toWei(priceData.toString(), "ether");
+        // const priceData = amount * 0.00007;
+        // const price = web3.utils.toWei(priceData.toString(), "ether");
 
         const limit = glimit.gasLimit;
         const tx = {

@@ -28,8 +28,10 @@ const TakeMeTo: FC<TakeMeToProps> = ({ title, to, variant }) => {
   const mintNFT = useMintForPublic(amount);
 
   const incrementCount = () => {
-    amount = amount + 1;
-    setAmount(amount);
+    if(amount < 6) {
+      amount = amount + 1;
+      setAmount(amount);
+    }
   }
 
   const decrementCount = () => {
